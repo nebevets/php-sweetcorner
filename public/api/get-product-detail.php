@@ -26,18 +26,20 @@
 
   if($stmt->execute()){
     $output['success'] = true;
-    $stmt->bind_result($pid, $name, $description, $cost, $alt, $title, $src);
-    $stmt->fetch();
-    if($pid){
+    $result = $stmt->get_result();
+    // $stmt->bind_result($pid, $name, $description, $cost, $alt, $title, $src);
+    // $stmt->fetch();
+    if($result->num_rows){
+      $row = $result->fetch_assoc();
       $output['product'] = [
-        'id' => (int) $pid,
-        "name" => $name,
-        "description" => $description,
-        "cost" => (int) $cost,
+        'id' => (int) $row['id'],
+        "name" => $row['name'],
+        "description" => $row['description'],
+        "cost" => (int) $row['cost'],
         'image' => [
-          'alt' => $alt,
-          'title' => $title,
-          'src' => $src,
+          'alt' => $row['alt'],
+          'title' => $row['title'],
+          'src' => $row['src'],
         ]
       ];
     } else {
