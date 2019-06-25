@@ -1,16 +1,23 @@
 import types from '../actions/types';
 
 const DEFAULT_STATE = {
-  products: []
+  products: [],
+  product: null,
 };
 
 export default (state = DEFAULT_STATE, action) => {
-  switch(action.type){
+  const {type, products, product} = action;
+  switch(type){
     case types.GET_PRODUCT_LIST:
       return {
         ...state,
-        list: action.products
+        products
       };
+    case types.GET_PRODUCT_DETAIL:
+    return {
+      ...state,
+      product
+    };
     default:
       return state;
   }
